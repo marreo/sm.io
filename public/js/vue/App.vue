@@ -3,13 +3,52 @@
       input(type='hidden', name='_csrf', :value="csrfToken")
       .datebox(v-if="showVote")
         h1 For how long will Trump last as US President?
-        .btn-group.btn-group-toggle(data-toggle="buttons")
-          label(class="btn btn-secondary active")
+        .btn-group.btn-group-lg.btn-group-toggle.col(data-toggle="buttons")
+          label(class="btn btn-secondary")
             input(type="radio" name="vote" value="1" autocomplete="off" checked="")
             | 2018 Q1
           label.btn.btn-secondary
-            input(type="radio" name="vote" value="2" autocomplete="off") 
+            input(type="radio" name="vote" value="2" autocomplete="off")
             | 2018 Q2
+          label(class="btn btn-secondary")
+            input(type="radio" name="vote" value="3" autocomplete="off" checked="")
+            | 2019 Q1
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2019 Q2
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2020 Q1
+          label(class="btn btn-secondary")
+            input(type="radio" name="vote" value="1" autocomplete="off" checked="")
+            | 2020 Q2
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="2" autocomplete="off")
+            | 2021 Q1
+          label(class="btn btn-secondary")
+            input(type="radio" name="vote" value="3" autocomplete="off" checked="")
+            | 2021 Q2
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2022 Q1
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2022 Q2
+          label(class="btn btn-secondary")
+            input(type="radio" name="vote" value="1" autocomplete="off" checked="")
+            | 2023 Q1
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="2" autocomplete="off")
+            | 2023 Q2
+          label(class="btn btn-secondary")
+            input(type="radio" name="vote" value="3" autocomplete="off" checked="")
+            | 2024 Q1
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2024 Q2
+          label.btn.btn-secondary
+            input(type="radio" name="vote" value="4" autocomplete="off") 
+            | 2025 Q1
 
           //- label.btn
           //-   input(type="radio" name="vote" class="btn btn-secondary col-12" value="1")
