@@ -25,6 +25,10 @@ html {
 
 body {
   margin-bottom: 75px;
+  background: #141E30;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
 }
 
 footer {
@@ -67,7 +71,6 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background-image: -webkit-radial-gradient(top, circle cover, #3c3b52 0%, #252233 80%);
   color: #fff;
   font-family: "Text Me One", sans-serif;
 }
@@ -82,4 +85,41 @@ a {
 
 .btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn {
   border-right: 3px solid rgba(0, 0, 0, 0.3);
+}
+
+$spinkit-size: 4em !default;
+$spinkit-spinner-color: #337ab7 !default;
+
+.sk-three-bounce {
+  $animationDuration: 1.4s;
+  $delayRange: 0.32s;
+  width: ($spinkit-size * 2);
+  margin: auto;
+  text-align: center;
+
+  .sk-child {
+    width: ($spinkit-size / 2);
+    height: ($spinkit-size / 2);
+    background-color: $spinkit-spinner-color;
+
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-three-bounce $animationDuration ease-in-out 0s infinite both;
+  }
+
+  .sk-bounce-1 {
+    animation-delay: -$delayRange;
+  }
+  .sk-bounce-2 {
+    animation-delay: (-$delayRange / 2);
+  }
+}
+
+@keyframes sk-three-bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1.0);
+  }
 }

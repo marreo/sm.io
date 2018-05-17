@@ -3,83 +3,62 @@
       input(type='hidden', name='_csrf', :value="csrfToken")
       .datebox(v-if="showVote")
         h1 For how long will Trump last as US President?
-        .btn-group.btn-group-lg.btn-group-toggle.col(data-toggle="buttons")
-          label(class="btn btn-secondary")
+        .btn-group.btn-group-lg.btn-group-toggle.row(data-toggle="buttons")
+          label.btn.btn-danger.col-sm-4
             input(type="radio" name="vote" value="1" autocomplete="off" checked="")
             | 2018 Q1
-          label.btn.btn-secondary
+          label.btn.btn-danger.col-sm-4
             input(type="radio" name="vote" value="2" autocomplete="off")
             | 2018 Q2
-          label(class="btn btn-secondary")
+          label.btn.btn-danger.col-sm-4
             input(type="radio" name="vote" value="3" autocomplete="off" checked="")
             | 2019 Q1
-          label.btn.btn-secondary
+          label.btn.btn-light.col-sm-4
             input(type="radio" name="vote" value="4" autocomplete="off") 
             | 2019 Q2
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="4" autocomplete="off") 
+          label.btn.btn-light.col-sm-4
+            input(type="radio" name="vote" value="5" autocomplete="off") 
             | 2020 Q1
-          label(class="btn btn-secondary")
-            input(type="radio" name="vote" value="1" autocomplete="off" checked="")
+          label.btn.btn-light.col-sm-4
+            input(type="radio" name="vote" value="6" autocomplete="off" checked="")
             | 2020 Q2
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="2" autocomplete="off")
+          label.btn.btn-primary.col-sm-4
+            input(type="radio" name="vote" value="7" autocomplete="off")
             | 2021 Q1
-          label(class="btn btn-secondary")
-            input(type="radio" name="vote" value="3" autocomplete="off" checked="")
+          label.btn.btn-primary.col-sm-4
+            input(type="radio" name="vote" value="8" autocomplete="off" checked="")
             | 2021 Q2
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="4" autocomplete="off") 
+          label.btn.btn-primary.col-sm-4
+            input(type="radio" name="vote" value="9" autocomplete="off") 
             | 2022 Q1
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="4" autocomplete="off") 
+          label.btn.btn-danger.col-sm-4
+            input(type="radio" name="vote" value="10" autocomplete="off") 
             | 2022 Q2
-          label(class="btn btn-secondary")
-            input(type="radio" name="vote" value="1" autocomplete="off" checked="")
+          label.btn.btn-danger.col-sm-4
+            input(type="radio" name="vote" value="11" autocomplete="off" checked="")
             | 2023 Q1
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="2" autocomplete="off")
+          label.btn.btn-danger.col-sm-4
+            input(type="radio" name="vote" value="12" autocomplete="off")
             | 2023 Q2
-          label(class="btn btn-secondary")
-            input(type="radio" name="vote" value="3" autocomplete="off" checked="")
+          label.btn.btn-light.col-sm-4
+            input(type="radio" name="vote" value="13" autocomplete="off" checked="")
             | 2024 Q1
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="4" autocomplete="off") 
+          label.btn.btn-light.col-sm-4
+            input(type="radio" name="vote" value="14" autocomplete="off") 
             | 2024 Q2
-          label.btn.btn-secondary
-            input(type="radio" name="vote" value="4" autocomplete="off") 
+          label.btn.btn-light.col-sm-4
+            input(type="radio" name="vote" value="15" autocomplete="off") 
             | 2025 Q1
-
-          //- label.btn
-          //-   input(type="radio" name="vote" class="btn btn-secondary col-12" value="1")
-          //-   | 2018 Q1
-          //- label.btn
-          //-   | 2018 Q2
-          //-   input(type="radio" name="vote" class="btn btn-secondary col-12" value="2")
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2019")
-        //-   button(type="button" class="btn btn-secondary col-12") 2019 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2019 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2020")
-        //-   button(type="button" class="btn btn-secondary col-12") 2020 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2020 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2021")
-        //-   button(type="button" class="btn btn-secondary col-12") 2021 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2021 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2022")
-        //-   button(type="button" class="btn btn-secondary col-12") 2022 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2022 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2023")
-        //-   button(type="button" class="btn btn-secondary col-12") 2023 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2023 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2024")
-        //-   button(type="button" class="btn btn-secondary col-12") 2024 Q1
-        //-   button(type="button" class="btn btn-secondary col-12") 2024 Q2
-        //- .btn-group.btn-group-lg.mr-2.col(role="group" aria-label="2025")
-        //-   button(type="button" class="btn btn-secondary col-12") 2025 Q1
-        //-   button(type="button" disabled class="btn btn-secondary col-12") The End?
         .col
           button.btn.btn-lg.col-12(v-on:click="voteClick")
             | Vote!
+      .loader(v-if="showLoader")
+        section
+          h2(style="text-align: center") Getting Results
+          .sk-three-bounce
+            .sk-bounce-1.sk-child
+            .sk-bounce-2.sk-child
+            .sk-bounce-3.sk-child
       .resultBox
         canvas#canvas(style="width: 100%;display: block;margin: 0 auto;")
 </template>
@@ -104,6 +83,7 @@ export default {
     return {
       showVote: true,
       showResult: false,
+      showLoader: false,
       voteData: {}
     };
   },
@@ -114,22 +94,38 @@ export default {
   mounted: function(argument) {
   },
   methods: {
+    randomColor: function() {
+      switch(Math.ceil(Math.random() * 3)) {
+        case 1:
+          return "btn-primary";
+        case 2:
+          return "btn-light";
+        case 3:
+          return "btn-danger";
+      }
+    },
     voteClick: function(event) {
       this.showVote = false;
+      this.showLoader = true;
       var data = {};
       data._csrf = $('input[name="_csrf"]').val();
       data.q = $('input[name="vote"]').filter(':checked').val();;
       this.$http.post("/api/vote", data).then(response => {
-        this.$http.get("/api/vote").then(response => {
+        this.getResult();
+      }, err => {
+        this.getResult();
+      });
+    },
+    getResult: function() {
+      this.$http.get("/api/vote").then(response => {
           this.voteData = response.body;
+          this.showLoader = false;
           this.showResult = true;
           this.showGraph();
         }, err => {
           this.showVote = true;
+          this.showLoader = false;
         });
-      }, err => {
-        this.showVote = true;
-      });
     },
     showGraph: function() {
 
