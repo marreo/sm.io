@@ -83,8 +83,6 @@ exports.get = (req, res) => {
       });
     });
   });
-
-  // res.json(data);
 };
 
 exports.post = (req, res, data, vueOptions) => {

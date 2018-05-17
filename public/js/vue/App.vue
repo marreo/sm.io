@@ -128,10 +128,7 @@ export default {
         });
     },
     showGraph: function() {
-
       var chartData = this.voteData;
-      console.log(chartData);
-
       new Chart(document.getElementById("canvas"), {
         type: 'line',
         data: {
