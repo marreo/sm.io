@@ -61,6 +61,15 @@
             .sk-bounce-3.sk-child
       .resultBox
         canvas#canvas(style="width: 100%;display: block;margin: 0 auto;")
+        .share
+          a(href="#")
+            i.fab.fa-twitter-square
+          a(href="#")
+            i.fab.fa-facebook-square
+          a(href="#")
+            i.fab.fa-reddit-square
+          a(href="#")
+            i.fas.fa-envelope-square
 </template>
 
 <style>
@@ -95,7 +104,7 @@ export default {
   },
   methods: {
     randomColor: function() {
-      switch(Math.ceil(Math.random() * 3)) {
+      switch (Math.ceil(Math.random() * 3)) {
         case 1:
           return "btn-primary";
         case 2:
@@ -118,14 +127,14 @@ export default {
     },
     getResult: function() {
       this.$http.get("/api/vote").then(response => {
-          this.voteData = response.body;
-          this.showLoader = false;
-          this.showResult = true;
-          this.showGraph();
-        }, err => {
-          this.showVote = true;
-          this.showLoader = false;
-        });
+        this.voteData = response.body;
+        this.showLoader = false;
+        this.showResult = true;
+        this.showGraph();
+      }, err => {
+        this.showVote = true;
+        this.showLoader = false;
+      });
     },
     showGraph: function() {
       var chartData = this.voteData;
@@ -136,12 +145,20 @@ export default {
           datasets: [{
             data: chartData,
             borderColor: "#d70206",
-            fill: "red",
+            fill: "#ed1c23",
             cubicInterpolationMode: "monotone",
           }
           ]
         },
         options: {
+          layout: {
+            padding: {
+              left: 15,
+              right: 15,
+              top: 0,
+              bottom: 0
+            }
+          },
           responsive: true,
           maintainAspectRatio: false,
           elements: { point: { radius: 5 } },
@@ -168,6 +185,11 @@ export default {
             ],
             xAxes: [
               {
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 90,
+                  minRotation: 90
+                },
                 display: true
               }
             ]

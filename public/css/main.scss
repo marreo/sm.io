@@ -1,18 +1,14 @@
-@import "/lib/font-awesome/font-awesome";
 @import "variables.scss";
 @import "switch.scss";
 @import "~bootstrap/scss/functions"; // Bootstrap Functions
 @import "~bootstrap/scss/variables"; // Bootstrap Functions
 @import "~bootstrap/scss/bootstrap"; // Bootstrap
-// Scaffolding
-// -------------------------
-[v-cloak]>* {
-  display: none;
-}
 
-[v-cloak]::before {
-  content: "loading...";
-}
+$darkBlue: #0660a9;
+$lightBlue: #0d76bd;
+$white: #fff;
+$red: #ed1c23;
+$gray: #888888;
 
 .container {
   margin-top: 40px;
@@ -142,15 +138,25 @@ $spinkit-spinner-color: #337ab7 !default;
 }
 
 @media (orientation: portrait) {
-  body {
+  .resultBox {
     @include transform-origin(0% 0%);
     @include transform(rotate(90deg));
     position: absolute;
     left: 100%;
-    height: 100vw;
+    height: 80vw;
     width: 100vh;
   }
   .container {
     margin-top: 0;
+  }
+}
+
+.share {
+  text-align: center;
+  font-size: 33px;
+  margin-top: 33px;
+
+  svg {
+    margin: 5px;
   }
 }
