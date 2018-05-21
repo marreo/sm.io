@@ -65,8 +65,6 @@
           a(href="#")
             i.fab.fa-twitter-square
           a(href="#")
-            i.fab.fa-facebook-square
-          a(href="#")
             i.fab.fa-reddit-square
           a(href="#")
             i.fas.fa-envelope-square
