@@ -43,6 +43,7 @@
     "express-session": "^1.15.5",
     "express-validator": "3.2.1",
     "express-vue": "4.0.14",
+    "fabric": "^2.3.0",
     "jquery": "3.2.1",
     "jwt-csrf": "4.1.0",
     "lob": "4.1.1",
