@@ -111,14 +111,20 @@ module.exports = function (app) {
    */
 
   //Returns Votes
-  app.get('/api/vote', function (req, res) {
-    return voteController.get(req, res);
+  app.get('/api/vote/facit', function (req, res) {
+    return voteController.getFacit(req, res);
   });
 
   //Save Vote
   app.post('/api/vote', function (req, res) {
     const data = getDataForView(req, res);
     voteController.post(req, res, data, vueOptions);
+  });
+
+  //Facit
+  app.post('/api/vote/admin', function (req, res) {
+    const data = getDataForView(req, res);
+    voteController.admin(req, res, data, vueOptions);
   });
 
   /**

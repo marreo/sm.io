@@ -2,36 +2,26 @@ import 'bootstrap';
 import 'fabric';
 
 $(document).ready(function () {
-    var jsonData = {};
-    var canvas = new fabric.Canvas('canvas1', {
-        isDrawingMode: true
-    });
-    canvas.isDrawingMode = true;
-    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
-    canvas.freeDrawingBrush.color = 'rgba(10,145,202,0.75)';
-    canvas.freeDrawingBrush.width = 75;
-    canvas.freeDrawingBrush.strokeLineCap = 'square';
-    canvas.freeDrawingBrush.strokeLineJoin = 'miter';
-    setBackground();
-    window.canvas = canvas;
 
-    // $('#saveBtn').click(function () {
-    //     jsonData = canvas.toJSON().objects;
-    // });
-    // $('#loadBtn').click(function () {
-    //     var canvasData = {
-    //         version: "2.3.0",
-    //         objects: jsonData
-    //     };
-    //     canvas.loadFromJSON(canvasData);
-    //     setBackground();
-    // });
+  console.log('Hello?');
 
-    function setBackground() {
-        canvas.setBackgroundImage("/img/tele2_oo.png", canvas.renderAll.bind(canvas), {
-            // Needed to position backgroundImage at 0/0
-            originX: 'left',
-            originY: 'top'
-        });
-    }
+  //Admin mode - show all grids
+  //Not admin mode - show only facit grids
+  //show and hide == kunna klicka på rutor == ge rätt klass
+
+  $(document).on('mouseenter', '#grid-overlay td.clickable', function () {
+    $(this).addClass("hover");
+  });
+  $(document).on('mouseleave', '#grid-overlay td.clickable', function () {
+    $(this).removeClass("hover");
+  });
+
+  $(document).on('click', '#grid-overlay td.clickable', function () {
+    console.log('Waht?');
+    var typeSelected = $('input[name="radio_seatType"]:checked').val();
+    $(this).attr("data-type", typeSelected);
+    $(this)
+      .toggleClass("selected")
+      .toggleClass("unselected");
+  });
 });

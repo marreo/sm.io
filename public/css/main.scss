@@ -160,3 +160,15 @@ $spinkit-spinner-color: #337ab7 !default;
     margin: 5px;
   }
 }
+
+#grid-source { position: absolute; }
+#grid-overlay { position: relative; }
+
+.img-arena {
+  width: 960px;
+  height: 720px;
+}
+
+.hover { background-color: rgba(0,0,0,0.1) !important; }
+.unselected { background-color: rgba(0,0,0,0.5); }
+.selected { background-color: yellow; }

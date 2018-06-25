@@ -1,29 +1,35 @@
 <template lang="pug">
   div
-    vheader
     .container
       input(type='hidden', name='_csrf', :value="csrfToken")
+      .col.btn-group.btn-group-toggle(data-toggle='buttons')
+        label.col.btn.btn-primary.active
+          input#option1(type='radio', name='radio_seatType', autocomplete='off', checked='', value="1")
+          |  Type A
+        label.col.btn.btn-success
+          input#option2(type='radio', name='radio_seatType', autocomplete='off', value="2")
+          |  Type B
+        label.col.btn.btn-warning
+          input#option2(type='radio', name='radio_seatType', autocomplete='off', value="3")
+          |  Type C
       div#canvas-wrapper
-        canvas(id="canvas1" style="border:1px solid #000;" width="960" height="720")
+        div#grid-source(style="border:1px solid #000;")
+          img(src="/img/tele2_oo.png").img-arena
+
+        button#saveBtn(v-on:click="adminClick") Facit
         button#saveBtn(v-on:click="saveClick") Save
-        button#loadBtn Load
+        button#loadBtn(v-on:click="getResults") Load
 </template>
-
-<style>
-
-</style>
-
 <script>
 import header from "./components/partials/header.vue";
 import footer from "./components/partials/footer.vue";
 export default {
   data: function() {
-    return {
-    };
+    return {};
   },
   components: {
     vheader: header,
-    vfooter: footer,
+    vfooter: footer
   },
   mounted: function(argument) {
     this.getResults();
@@ -32,62 +38,92 @@ export default {
     saveClick: function(event) {
       var data = {};
       data._csrf = $('input[name="_csrf"]').val();
-      data.path = canvas._objects[canvas._objects.length - 1].path;
-      this.$http.post("/api/vote", data).then(response => {
-        canvas._objects = [];
-        var path = new fabric.Path(response.body.path, {
-          type: 'path',
-          version: '2.3.0',
-          originX: 'left',
-          originY: 'top',
-          left: 189.5,
-          top: 149.5,
-          width: 524,
-          height: 355,
-          fill: null,
-          stroke: 'rgba(10,145,202,0.75)',
-          strokeWidth: 75,
-          strokeDashArray: null,
-          strokeLineCap: 'square',
-          strokeLineJoin: 'miter',
-          strokeMiterLimit: 10,
-          scaleX: 1,
-          scaleY: 1,
-          angle: 0,
-          flipX: false,
-          flipY: false,
-          opacity: 1,
-          shadow: null,
-          visible: true,
-          clipTo: null,
-          backgroundColor: '',
-          fillRule: 'nonzero',
-          paintFirst: 'fill',
-          globalCompositeOperation: 'source-over',
-          transformMatrix: null,
-          skewX: 0,
-          skewY: 0,
-          path: response.body.path
-        });
-        canvas.add(path);
-      }, err => {
-      });
+      var selectedTiles = $("td.selected");
+      var facit = this.tilesToObjects(selectedTiles, false);
+      data.facit = facit;
+      this.$http.post("/api/vote", data).then(response => {}, err => {});
+    },
+    adminClick: function() {
+      var data = {};
+      data._csrf = $('input[name="_csrf"]').val();
+      var selectedTiles = $("td.selected");
+      var facit = this.tilesToObjects(selectedTiles, true);
+      data.facit = facit;
+      $("td")
+        .removeClass("unselected")
+        .removeClass("selected");
+      this.$http.post("/api/vote/admin", data).then(
+        response => {
+          for (let i = 0; i < response.body.length; i++) {
+            const element = response.body[i];
+            $("td:eq(" + element.p + ")").addClass("selected");
+          }
+        },
+        err => {}
+      );
     },
     getResults: function() {
-      // this.$http.get("/api/vote").then(response => {
-      //   canvas._objects = [];
-      //   var path = new fabric.Path(response.body.path, {
-      //     stroke: 'blue',
-      //     strokeWidth: 50,
-      //     strokeLineCap: 'square',
-      //     strokeLineJoin: 'miter',
-      //     fill: true,
-      //     originX: 'left',
-      //     originY: 'top'
-      //   });
-      //   canvas.add(path);
-      // }, err => {
-      // });
+      this.$http.get("/api/vote/facit").then(
+        response => {
+          this.createTiles(response.body);
+        },
+        err => {}
+      );
+    },
+    tilesToObjects: function(tiles, ignoreType) {
+      var objects = [];
+      for (let i = 0; i < tiles.length; i++) {
+        const element = tiles[i];
+        var elementIndex = $("td").index(element);
+        var facitObj = {};
+        if (ignoreType === true) {
+          facitObj = { p: elementIndex };
+        } else {
+          facitObj = { p: elementIndex, t: $(element).data("type") };
+        }
+        objects.push(facitObj);
+      }
+      return objects;
+    },
+    createTiles: function(facit) {
+      if (facit.length < 1) {
+        return; //Error, must have facit
+      }
+
+      var $src = $("#grid-source");
+      var $wrap = $('<div id="grid-overlay"></div>');
+      var $gsize = 48;
+
+      var $cols = Math.ceil($src.find("img").innerWidth() / $gsize);
+      var $rows = Math.ceil($src.find("img").innerHeight() / $gsize);
+      var index = 0;
+
+      // create overlay
+      var $tbl = $("<table></table>");
+      for (var y = 1; y <= $rows; y++) {
+        var $tr = $("<tr></tr>");
+        for (var x = 1; x <= $cols; x++) {
+          var facitPos = facit.filter(a => a === "" + index);
+          var $td = $('<td data-type="0"></td>');
+          $td.css("width", $gsize + "px").css("height", $gsize + "px");
+          $tr.append($td);
+          if (facitPos.length === 0) {
+            $td.addClass("disabled");
+          } else {
+            $td.addClass("clickable");
+            $td.addClass("unselected");
+          }
+          index++;
+        }
+        $tbl.append($tr);
+      }
+      $src
+        .css("width", $cols * $gsize + "px")
+        .css("height", $rows * $gsize + "px");
+
+      // attach overlay
+      $wrap.append($tbl);
+      $src.after($wrap);
     }
   }
 };
