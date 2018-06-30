@@ -17,11 +17,25 @@ $(document).ready(function () {
   });
 
   $(document).on('click', '#grid-overlay td.clickable', function () {
-    console.log('Waht?');
     var typeSelected = $('input[name="radio_seatType"]:checked').val();
+    var classSelected = "";
+
+    switch (typeSelected) {
+      case "1":
+        classSelected = "bg-primary"
+        break;
+      case "2":
+        classSelected = "bg-success"
+        break;
+      case "3":
+        classSelected = "bg-warning"
+        break;
+    }
+
     $(this).attr("data-type", typeSelected);
     $(this)
       .toggleClass("selected")
-      .toggleClass("unselected");
+      .toggleClass("unselected")
+      .addClass(classSelected);
   });
 });

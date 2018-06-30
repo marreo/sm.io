@@ -15,10 +15,9 @@
       div#canvas-wrapper
         div#grid-source(style="border:1px solid #000;")
           img(src="/img/tele2_oo.png").img-arena
-
-        button#saveBtn(v-on:click="adminClick") Facit
-        button#saveBtn(v-on:click="saveClick") Save
-        button#loadBtn(v-on:click="getResults") Load
+    button#saveBtn(v-on:click="adminClick") Facit
+    button#saveBtn(v-on:click="saveClick") Save
+    button#loadBtn(v-on:click="getResults") Load
 </template>
 <script>
 import header from "./components/partials/header.vue";

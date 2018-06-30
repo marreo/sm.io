@@ -106,6 +106,11 @@ module.exports = function (app) {
     res.renderVue('App', data, vueOptions);
   });
 
+  app.get('/admin', function (req, res) {
+    const data = getDataForView(req, res);
+    res.renderVue('Admin', data, vueOptions);
+  });
+
   /**
    * API Vote Routes.
    */
