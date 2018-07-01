@@ -115,6 +115,10 @@ module.exports = function (app) {
    * API Vote Routes.
    */
 
+  app.get('/api/vote/result', function (req, res) {
+    return voteController.getResultForStadium(req, res);
+  });
+
   //Returns Votes
   app.get('/api/vote/facit', function (req, res) {
     return voteController.getFacit(req, res);

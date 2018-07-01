@@ -12,8 +12,12 @@
         label.col.btn.btn-warning
           input#option2(type='radio', name='radio_seatType', autocomplete='off', value="3")
           |  Type C
-      div#canvas-wrapper
-        div#grid-source(style="border:1px solid #000;")
+      #canvas-wrapper
+        #grid-source(style="border:1px solid #000;")
+          .btn.btn-primary.btn-corner(v-if="resultsMode == true", v-on:click="toogleResultMode")
+            | Vote
+          .btn.btn-primary.btn-corner(v-if="resultsMode == false", v-on:click="toogleResultMode")
+            | Results
           img(src="/img/tele2_oo.png").img-arena
     button#saveBtn(v-on:click="adminClick") Facit
     button#saveBtn(v-on:click="saveClick") Save
@@ -24,7 +28,9 @@ import header from "./components/partials/header.vue";
 import footer from "./components/partials/footer.vue";
 export default {
   data: function() {
-    return {};
+    return {
+      resultsMode: true
+    };
   },
   components: {
     vheader: header,
@@ -34,13 +40,16 @@ export default {
     this.getResults();
   },
   methods: {
+    toogleResultMode: function() {
+      this.resultsMode = !this.resultsMode;
+    },
     saveClick: function(event) {
       var data = {};
       data._csrf = $('input[name="_csrf"]').val();
       var selectedTiles = $("td.selected");
       var facit = this.tilesToObjects(selectedTiles, false);
       data.facit = facit;
-      this.$http.post("/api/vote", data).then(response => {}, err => {});
+      this.$http.post("/api/vote", data).then(response => { }, err => { });
     },
     adminClick: function() {
       var data = {};
@@ -58,15 +67,23 @@ export default {
             $("td:eq(" + element.p + ")").addClass("selected");
           }
         },
-        err => {}
+        err => { }
       );
     },
-    getResults: function() {
+    getFacit: function() {
       this.$http.get("/api/vote/facit").then(
         response => {
           this.createTiles(response.body);
         },
-        err => {}
+        err => { }
+      );
+    },
+    getResults: function() {
+      this.$http.get("/api/vote/result").then(
+        response => {
+          this.createTilesWithResult(response.body);
+        },
+        err => { }
       );
     },
     tilesToObjects: function(tiles, ignoreType) {
@@ -83,6 +100,57 @@ export default {
         objects.push(facitObj);
       }
       return objects;
+    },
+    createTilesWithResult: function(facit) {
+      if (facit.length < 1) {
+        return; //Error, must have facit
+      }
+
+      var $src = $("#grid-source");
+      var $wrap = $('<div id="grid-overlay"></div>');
+      var $gsize = 48;
+
+      var $cols = Math.ceil($src.find("img").innerWidth() / $gsize);
+      var $rows = Math.ceil($src.find("img").innerHeight() / $gsize);
+      var index = 0;
+
+      // create overlay
+      var $tbl = $("<table></table>");
+      for (var y = 1; y <= $rows; y++) {
+        var $tr = $("<tr></tr>");
+        for (var x = 1; x <= $cols; x++) {
+          var facitPos = facit.filter(a => a.position === index);
+          var $td = $('<td data-type="0"></td>');
+          $td.css("width", $gsize + "px").css("height", $gsize + "px");
+          $tr.append($td);
+          if (facitPos.length === 0) {
+            $td.addClass("disabled");
+          } else {
+            var classSelected = "";
+            switch (facit.filter(a => a.position === index)[0].type) {
+              case 1:
+                classSelected = "bg-primary"
+                break;
+              case 2:
+                classSelected = "bg-success"
+                break;
+              case 3:
+                classSelected = "bg-warning"
+                break;
+            }
+            $td.addClass(classSelected);
+          }
+          index++;
+        }
+        $tbl.append($tr);
+      }
+      $src
+        .css("width", $cols * $gsize + "px")
+        .css("height", $rows * $gsize + "px");
+
+      // attach overlay
+      $wrap.append($tbl);
+      $src.after($wrap);
     },
     createTiles: function(facit) {
       if (facit.length < 1) {

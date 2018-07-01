@@ -3,13 +3,11 @@
 @import "~bootstrap/scss/functions"; // Bootstrap Functions
 @import "~bootstrap/scss/variables"; // Bootstrap Functions
 @import "~bootstrap/scss/bootstrap"; // Bootstrap
-
 $darkBlue: #0660a9;
 $lightBlue: #0d76bd;
 $white: #fff;
 $red: #ed1c23;
 $gray: #888888;
-
 .container {
   margin-top: 40px;
 }
@@ -155,20 +153,43 @@ $spinkit-spinner-color: #337ab7 !default;
   text-align: center;
   font-size: 33px;
   margin-top: 33px;
-
   svg {
     margin: 5px;
   }
 }
 
-#grid-source { position: absolute; }
-#grid-overlay { position: relative; }
+#grid-source {
+  position: absolute;
+}
+
+#grid-overlay {
+  position: relative;
+}
 
 .img-arena {
   width: 960px;
   height: 720px;
 }
 
-.hover { background-color: rgba(0,0,0,0.1) !important; }
-.unselected { background-color: rgba(0,0,0,0.5); }
-.selected { background-color: yellow; }
+.hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.unselected {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.selected {
+  background-color: yellow;
+}
+
+#grid-overlay td {
+  opacity: 0.6;
+}
+
+.btn-corner {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 10;
+}
