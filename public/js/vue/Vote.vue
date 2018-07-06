@@ -55,7 +55,7 @@ export default {
       var selectedTiles = $("#grid-overlay-vote td.selected");
       var facit = this.tilesToObjects(selectedTiles, false);
       data.facit = facit;
-      this.$http.post("/api/vote", data).then(response => { }, err => { });
+      this.$http.post("/api/vote/" + $('input[name="_id"]').val(), data).then(response => { }, err => { });
     },
     getStadium: function() {
       this.$http.get("/api/stadium/" + $('input[name="_id"]').val()).then(
@@ -120,7 +120,7 @@ export default {
       for (var y = 1; y <= $rows; y++) {
         var $tr = $("<tr></tr>");
         for (var x = 1; x <= $cols; x++) {
-          var facitPos = facit.filter(a => a.position === index);
+          var facitPos = facit.filter(a => a.p === index);
           var $td = $('<td data-type="0"></td>');
           $td.css("width", $gsize + "px").css("height", $gsize + "px");
           $tr.append($td);
@@ -128,7 +128,7 @@ export default {
             $td.addClass("disabled");
           } else {
             var classSelected = "";
-            switch (facit.filter(a => a.position === index)[0].type) {
+            switch (facit.filter(a => a.p === index)[0].t) {
               case 1:
                 classSelected = "bg-primary"
                 break;

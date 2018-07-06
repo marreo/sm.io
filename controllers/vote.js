@@ -48,12 +48,12 @@ exports.getResultForStadium = (req, res) => {
         var result = [];
         var positions = votes.map(a => a.positions).reduce((acc, val) => acc.concat(val), []);
         var votesPerPosition = positions.groupBy(function (c) {
-          return c.position;
+          return c.p;
         });
 
         for (let index = 0; index < Object.values(votesPerPosition).length; index++) {
           const votesPerPositionArr = Object.values(votesPerPosition)[index];
-          var types = votesPerPositionArr.map(a => a.type);
+          var types = votesPerPositionArr.map(a => a.t);
           var countByType = _.countBy(types);
           var positionKey = Object.keys(votesPerPosition)[index];
 
@@ -68,8 +68,8 @@ exports.getResultForStadium = (req, res) => {
           };
           var sortedCount = countObjects.sort(compareByValue);
           result.push({
-            position: parseInt(positionKey),
-            type: parseInt(sortedCount[0].key)
+            p: parseInt(positionKey),
+            t: parseInt(sortedCount[0].key)
           });
         }
         res.send(result);
@@ -83,7 +83,7 @@ exports.admin = (req, res, data, vueOptions) => {
   var facit = req.body.facit.map(a => a.p).toString();
   var newFacit = new Facit();
   newFacit.asString = facit;
-  newFacit.stadiumId = req.params.id;
+  newFacit.stadium = req.params.id;
   newFacit.createdAt = new Date();
   return newFacit.save()
     .then((doc) => {
@@ -97,8 +97,8 @@ exports.post = (req, res, data, vueOptions) => {
   for (let index = 0; index < req.body.facit.length; index++) {
     const element = req.body.facit[index];
     var votePosition = {
-      position: element.p,
-      type: element.t
+      p: element.p,
+      t: element.t
     };
     vote.positions.push(votePosition);
   }

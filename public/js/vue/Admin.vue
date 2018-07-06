@@ -32,7 +32,7 @@ export default {
             $("td")
                 .removeClass("unselected")
                 .removeClass("selected");
-            this.$http.post("/api/vote/admin", data).then(
+            this.$http.post("/api/vote/admin/" + $('input[name="_id"]').val(), data).then(
                 response => {
                     for (let i = 0; i < response.body.length; i++) {
                         const element = response.body[i];
@@ -66,7 +66,7 @@ export default {
         },
         createTiles: function() {
             var $src = $("#grid-source");
-            var $wrap = $('<div id="grid-overlay"></div>');
+            var $wrap = $('<div class="grid-overlay"></div>');
             var $gsize = 24;
 
             var $cols = Math.ceil($src.find("img").innerWidth() / $gsize);
