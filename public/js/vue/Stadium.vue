@@ -2,7 +2,7 @@
   div
     vheader
     input(type='hidden', name='_csrf', :value="csrfToken")
-    .stadium-list.card-group
+    .stadium-list.card-columns
 
 </template>
 <script>
