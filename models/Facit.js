@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const facitSchema = new mongoose.Schema({
+  stadium: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stadium' }],
   asString: String,
-  stadiumId: Number,
   createdAt: Date
 });
 

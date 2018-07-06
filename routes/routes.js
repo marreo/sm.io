@@ -9,6 +9,7 @@ const moment = require('moment');
  */
 
 const voteController = require('../controllers/vote');
+const stadiumController = require('../controllers/stadium');
 
 module.exports = function (app) {
 
@@ -106,32 +107,54 @@ module.exports = function (app) {
     res.renderVue('App', data, vueOptions);
   });
 
-  app.get('/admin', function (req, res) {
+  app.get('/admin/:id', function (req, res) {
     const data = getDataForView(req, res);
+    data.id = req.params.id;
     res.renderVue('Admin', data, vueOptions);
+  });
+
+  app.get('/stadium', function (req, res) {
+    const data = getDataForView(req, res);
+    res.renderVue('Stadium', data, vueOptions);
+  });
+
+  app.get('/stadium/:id', function (req, res) {
+    const data = getDataForView(req, res);
+    data.id = req.params.id;
+    res.renderVue('Vote', data, vueOptions);
+  });
+
+  app.get('/api/stadium', function (req, res) {
+    return stadiumController.get(req, res);
+  });
+  app.get('/api/stadium/:id', function (req, res) {
+    return stadiumController.getDetail(req, res);
+  });
+  app.post('/api/stadium/', function (req, res) {
+    return stadiumController.create(req, res);
   });
 
   /**
    * API Vote Routes.
    */
 
-  app.get('/api/vote/result', function (req, res) {
+  app.get('/api/vote/result/:id', function (req, res) {
     return voteController.getResultForStadium(req, res);
   });
 
   //Returns Votes
-  app.get('/api/vote/facit', function (req, res) {
+  app.get('/api/vote/facit/:id', function (req, res) {
     return voteController.getFacit(req, res);
   });
 
   //Save Vote
-  app.post('/api/vote', function (req, res) {
+  app.post('/api/vote/:id', function (req, res) {
     const data = getDataForView(req, res);
     voteController.post(req, res, data, vueOptions);
   });
 
   //Facit
-  app.post('/api/vote/admin', function (req, res) {
+  app.post('/api/vote/admin/:id', function (req, res) {
     const data = getDataForView(req, res);
     voteController.admin(req, res, data, vueOptions);
   });

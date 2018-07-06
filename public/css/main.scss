@@ -162,7 +162,7 @@ $spinkit-spinner-color: #337ab7 !default;
   position: absolute;
 }
 
-#grid-overlay {
+.grid-overlay {
   position: relative;
 }
 
@@ -183,7 +183,7 @@ $spinkit-spinner-color: #337ab7 !default;
   background-color: yellow;
 }
 
-#grid-overlay td {
+.grid-overlay td {
   opacity: 0.6;
 }
 
@@ -192,4 +192,13 @@ $spinkit-spinner-color: #337ab7 !default;
   right: 10px;
   top: 10px;
   z-index: 10;
+}
+
+.card a, .card p {
+  text-decoration: none;
+  color: #333;
+}
+
+.card:hover {
+  opacity: 0.9;
 }

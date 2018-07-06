@@ -2,6 +2,7 @@
   div
     .container
       input(type='hidden', name='_csrf', :value="csrfToken")
+      input(type='hidden', name='_id', :value="id")
       div#canvas-wrapper
         div#grid-source(style="border:1px solid #000;")
           img(src="/img/tele2_oo.png").img-arena
@@ -19,7 +20,7 @@ export default {
         vfooter: footer
     },
     mounted: function(argument) {
-        this.getResults();
+        this.createTiles();
     },
     methods: {
         adminClick: function() {
@@ -44,7 +45,6 @@ export default {
         getResults: function() {
             this.$http.get("/api/vote/facit").then(
                 response => {
-                    this.createTiles();
                 },
                 err => { }
             );
@@ -67,7 +67,7 @@ export default {
         createTiles: function() {
             var $src = $("#grid-source");
             var $wrap = $('<div id="grid-overlay"></div>');
-            var $gsize = 48;
+            var $gsize = 24;
 
             var $cols = Math.ceil($src.find("img").innerWidth() / $gsize);
             var $rows = Math.ceil($src.find("img").innerHeight() / $gsize);

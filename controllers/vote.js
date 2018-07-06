@@ -20,7 +20,7 @@ function compareByValue(a, b) {
 
 exports.getFacit = (req, res) => {
   Facit.findOne({
-      stadiumId: 99
+      stadium: req.params.id
     }, null, {
       sort: {
         createdAt: -1
@@ -37,7 +37,7 @@ exports.getFacit = (req, res) => {
 exports.getResultForStadium = (req, res) => {
   //Get all votes for a specific stadium
   Vote.find({
-      stadiumId: 99
+      stadium: req.params.id
     })
     .then((votes) => {
       if (votes != null && votes.length > 0) {
@@ -73,6 +73,8 @@ exports.getResultForStadium = (req, res) => {
           });
         }
         res.send(result);
+      } else {
+        res.send([]);
       }
     });
 };
@@ -81,7 +83,7 @@ exports.admin = (req, res, data, vueOptions) => {
   var facit = req.body.facit.map(a => a.p).toString();
   var newFacit = new Facit();
   newFacit.asString = facit;
-  newFacit.stadiumId = 99;
+  newFacit.stadiumId = req.params.id;
   newFacit.createdAt = new Date();
   return newFacit.save()
     .then((doc) => {
@@ -91,7 +93,7 @@ exports.admin = (req, res, data, vueOptions) => {
 
 exports.post = (req, res, data, vueOptions) => {
   var vote = new Vote();
-  vote.stadiumId = 99;
+  vote.stadium = req.params.id;
   for (let index = 0; index < req.body.facit.length; index++) {
     const element = req.body.facit[index];
     var votePosition = {

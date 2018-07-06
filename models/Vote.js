@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const voteSchema = new mongoose.Schema({
-  stadiumId: Number,
-  positions: [new mongoose.Schema({
-    position: Number,
-    type: Number
-  })]
+  stadium: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stadium' }],
+  positions: [{
+    type: String,
+    ref: "VotePosition"
+  }]
 });
 
 const Vote = mongoose.model('Vote', voteSchema);
